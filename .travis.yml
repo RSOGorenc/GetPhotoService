@@ -7,3 +7,6 @@ services:
 
 script:
   - docker build -t get-microservice .
+after_success:
+  - docker login -u "$DOCKER_HUB_USERNAME" -p "$DOCKER_HUB_PASSWORD"
+  - docker push get-microservice:latest
