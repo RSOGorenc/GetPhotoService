@@ -8,5 +8,6 @@ services:
 script:
   - docker build -t get-microservice .
 after_success:
+  - docker tag get-microservice "$DOCKER_HUB_USERNAME"/get-microservice:latest
   - docker login -u "$DOCKER_HUB_USERNAME" -p "$DOCKER_HUB_PASSWORD"
   - docker push get-microservice:latest
