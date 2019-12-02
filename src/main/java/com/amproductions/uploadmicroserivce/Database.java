@@ -2,8 +2,10 @@ package com.amproductions.uploadmicroserivce;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 import javax.json.bind.JsonbBuilder;
 
@@ -13,16 +15,20 @@ class Database {
     private static MongoCollection collection = database.getCollection("images");
 
     @SuppressWarnings("unchecked")
-    static boolean AddImage(ImageEntry image){
+    static Document GetImage(ImageGetEntry entry){
         try {
-            String json = JsonbBuilder.create().toJson(image);
+            String json = JsonbBuilder.create().toJson(entry);
             BasicDBObject dbObject = BasicDBObject.parse(json);
-            collection.insertOne(new org.bson.Document(dbObject.toMap()));
-        }catch (Exception e){
+            FindIterable result = collection.find(new org.bson.Document(dbObject.toMap()));
+            Document res = null;
+            for (Object doc: result) {
+                res = (Document) doc;
+            }
+            return res;
+        } catch (Exception e){
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return true;
     }
 
 }
