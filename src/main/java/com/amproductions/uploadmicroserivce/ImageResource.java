@@ -1,7 +1,10 @@
 package com.amproductions.uploadmicroserivce;
 
 import org.bson.Document;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Metric;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,6 +15,8 @@ import java.time.LocalDate;
 @Path("catalogue")
 public class ImageResource {
 
+
+    @Counted(name = "getImage-count")
     @GET
     @Path("/{userId}")
     public Response getImage(@PathParam("userId") String userID) {
@@ -22,11 +27,7 @@ public class ImageResource {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
             return Response.status(Response.Status.OK).entity(image).build();
-//            String imageUrl = AwsStorage.UploadImage(image.getImageBase64());
-//            ImageEntry response = new ImageEntry(imageUrl, image.getUserId(), LocalDate.now());
-//            if(Database.AddImage(response)){
-//                return Response.status(Response.Status.CREATED).build();
-//            }
+
         }
         catch (Exception e){
             e.printStackTrace();
