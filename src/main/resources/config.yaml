@@ -15,6 +15,11 @@ kumuluzee:
     web-instrumentation:
       - name: catalogue-endpoint
         url-pattern: /v1/catalogue/*
+
+  health:
+    checks:
+      mongo-health-check:
+          connection-url: mongodb://rso-mongo-service:27017/local?serverSelectionTimeoutMS=2000
 #    logstash:
 #      address: 192.168.0.1
 #      port: 5043
