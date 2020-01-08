@@ -124,23 +124,6 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.11.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.679</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.9.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo-driver.version}</version>
-            <optional>true</optional>
-        </dependency>
 
         <dependency>
             <groupId>org.eclipse.microprofile.health</groupId>
