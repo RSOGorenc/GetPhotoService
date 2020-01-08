@@ -1,5 +1,7 @@
 package com.amproductions.uploadmicroserivce;
 
+import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
 import org.bson.Document;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Metric;
@@ -9,6 +11,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -21,8 +25,9 @@ public class ImageResource {
     @Path("/{userId}")
     public Response getImage(@PathParam("userId") String userID) {
         try {
-            ImageGetEntry entry = new ImageGetEntry(userID);
-            Document image = Database.GetImage(entry);
+
+            ArrayList<Document> image = Database.GetImages(userID);
+
             if (image == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }

@@ -15,13 +15,7 @@ kumuluzee:
     web-instrumentation:
       - name: catalogue-endpoint
         url-pattern: /v1/catalogue/*
-#    logstash:
-#      address: 192.168.0.1
-#      port: 5043
-#      period-s: 15
-#    logs:
-#      period-s: 60
-#      level: INFO
+
 
 config-properties:
   test: true

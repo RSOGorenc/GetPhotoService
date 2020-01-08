@@ -1,5 +1,4 @@
 package com.amproductions.uploadmicroserivce;
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
@@ -7,38 +6,26 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-import javax.json.bind.JsonbBuilder;
+import java.util.ArrayList;
 
-
-
-import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
-import com.kumuluz.ee.health.annotations.BuiltInHealthCheck;
-import com.kumuluz.ee.health.checks.KumuluzHealthCheck;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoDatabase;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
-
-import javax.enterprise.context.ApplicationScoped;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static com.mongodb.client.model.Filters.eq;
 
 class Database {
-    private static MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://192.168.99.100:27017"));
+    private static MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://rso-mongo-service:27017"));
     private static MongoDatabase database = mongoClient.getDatabase("imagePlatform");
     private static MongoCollection collection = database.getCollection("images");
 
 
     @SuppressWarnings("unchecked")
-    static Document GetImage(ImageGetEntry entry){
+    static ArrayList<Document> GetImages(String userId){
         try {
-            String json = JsonbBuilder.create().toJson(entry);
-            BasicDBObject dbObject = BasicDBObject.parse(json);
-            FindIterable result = collection.find(new org.bson.Document(dbObject.toMap()));
-            Document res = null;
-            for (Object doc: result) {
-                res = (Document) doc;
+
+            FindIterable<Document> result = collection.find(eq("userId",userId));
+
+            ArrayList<Document> res= new ArrayList<>();
+
+            for (Document doc: result) {
+                res.add(doc);
             }
             return res;
 
@@ -46,6 +33,7 @@ class Database {
             e.printStackTrace();
             return null;
         }
+
     }
 
 
