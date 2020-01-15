@@ -24,6 +24,7 @@ class Database {
 
             ArrayList<Document> res= new ArrayList<>();
 
+
             for (Document doc: result) {
                 res.add(doc);
             }
